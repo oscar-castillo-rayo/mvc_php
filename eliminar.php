@@ -2,6 +2,7 @@
 require_once "controllers/ProductoController.php";
 
 if (isset($_GET["id"])) {
+    echo "id: " . $_GET["id"];
     $controller = new ProductoController();
     $controller->borrarProducto($_GET["id"]);
 }

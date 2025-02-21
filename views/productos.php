@@ -1,12 +1,8 @@
 <?php
-require_once "controllers/ProductoController.php";
+require_once "../controllers/ProductoController.php";
+
 
 $controller = new ProductoController();
-
-// Agregar producto si se envió el formulario
-if (isset($_POST["nombre"]) && isset($_POST["precio"])) {
-    $controller->agregarProducto($_POST["nombre"], $_POST["precio"]);
-}
 
 // Obtener todos los productos
 $productos = $controller->listarProductos();
@@ -20,21 +16,31 @@ $productos = $controller->listarProductos();
     <title>Lista de Productos</title>
 </head>
 <body>
-    <h2>Agregar Producto</h2>
-    <form method="POST">
-        <input type="text" name="nombre" placeholder="Nombre del producto" required>
-        <input type="number" step="0.01" name="precio" placeholder="Precio" required>
-        <button type="submit">Agregar</button>
-    </form>
-
     <h2>Lista de Productos</h2>
-    <ul>
-        <?php foreach ($productos as $prod) : ?>
-            <li>
-                <?= $prod['nombre'] ?> - $<?= $prod['precio'] ?>
-                <a href="eliminar.php?id=<?= $prod['id'] ?>">Eliminar</a>
-            </li>
-        <?php endforeach; ?>
-    </ul>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($productos as $prod) : ?>
+                <tr>
+                    <td><?= $prod['id'] ?></td>
+                    <td><?= $prod['nombre'] ?></td>
+                    <td>$<?= number_format($prod['precio'], 2) ?></td>
+                    <td>
+                        <a href="../eliminar.php?id=<?= $prod['id'] ?>">Eliminar</a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+
+    <br>
+    <a href="../index.php">Volver al inicio</a>
 </body>
 </html>
